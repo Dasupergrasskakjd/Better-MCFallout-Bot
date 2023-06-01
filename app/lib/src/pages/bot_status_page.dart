@@ -322,7 +322,6 @@ class _StatusState extends State<_Status> {
       builder: (context, snapshot) {
         if (snapshot.data != null) {
           final data = snapshot.data!;
-
           return Column(
             children: [
               IntrinsicHeight(

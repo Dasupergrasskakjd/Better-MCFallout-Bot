@@ -7,9 +7,7 @@ import { Bot } from "mineflayer";
 import { config } from "@/index";
 import { assert } from "console";
 import minecraftData from 'minecraft-data';
-import { Util, position } from "./util";
-import { Vec3 } from 'vec3';
-import { Block } from "prismarine-block";
+import { stack, position } from "./util";
 const mcdata = minecraftData(1.19)
 
 let _isAttacking = false;
@@ -65,7 +63,7 @@ export class ActionHandler {
       else if (command.startsWith(".count")){
         let payload:string[] = command.split(" ");
         let itemid:number = mcdata.itemsByName[payload[1]].id;
-        EventEmitter.gameMessage("You have "+bot.inventory.count(itemid,null)+" of "+payload[1],new Date().getTime());
+        EventEmitter.gameMessage(`You have ${bot.inventory.count(itemid,null)} of ${payload[1]}`,new Date().getTime());
       }
       else if (command.startsWith(".selfkick")){
         let payload:string[] = command.split(" ");
@@ -85,7 +83,16 @@ export class ActionHandler {
         }
       }
       else if (command.startsWith(".eval")){
-        eval(command.split(" ")[1]);
+        eval(command.split(" ").slice(1).join(" "));
+      }
+      else if (command.startsWith(".say")){
+        bot.chat(command.split(" ").slice(1).join(" "))
+      }
+      else if (command.startsWith(".stack")){
+        stack(bot,"totem_of_undying")
+      }
+      else if (command.startsWith(".")){
+        EventEmitter.gameMessage(`Unknown command: ${command.split(" ")[0]}, use .say if you want to say it in chat`,new Date().getTime());
       }
       else bot.chat(command);
 

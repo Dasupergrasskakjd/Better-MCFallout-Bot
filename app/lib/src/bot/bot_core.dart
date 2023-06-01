@@ -39,10 +39,10 @@ class BotCore {
     try {
       // Not the first time to reconnect
       if (reconnectTimes > 1) {
-        await Future.delayed(const Duration(seconds: 15));
+        await Future.delayed(const Duration(seconds: 30));
       }
 
-      await _connect().timeout(const Duration(seconds: 20));
+      await _connect().timeout(const Duration(seconds: 30));
       // Successful to reconnect, so reset reconnect times
       reconnectTimes > 0 ? reconnectTimes-- : reconnectTimes = 0;
       return true;
