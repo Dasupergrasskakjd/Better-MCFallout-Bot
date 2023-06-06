@@ -18,6 +18,7 @@ class _BotStatusPageState extends State<BotStatusPage> {
   late bool autoEat;
   late bool autoThrow;
   late bool autoReconnect;
+  late bool autoDeposit;
   late BotActionType botAction;
   late TextEditingController commandController;
 
@@ -27,6 +28,7 @@ class _BotStatusPageState extends State<BotStatusPage> {
     autoThrow = appConfig.autoThrow;
     autoReconnect = appConfig.autoReconnect;
     botAction = appConfig.botAction;
+    autoDeposit = appConfig.autoDeposit;
 
     commandController = TextEditingController();
 
@@ -52,7 +54,8 @@ class _BotStatusPageState extends State<BotStatusPage> {
             builder: (context) => ConnectingServer(
                 account: widget.bot.account,
                 reconnect: true,
-                reconnectTimes: widget.bot.reconnectTimes + 1));
+                reconnectTimes: widget.bot.reconnectTimes + 1,
+                disconnectReason: event.reason,));
       } else {
         showDialog(
             context: context,
@@ -220,6 +223,24 @@ class _BotStatusPageState extends State<BotStatusPage> {
                                 title: const Text('自動重新連線')),
                           ),
                         ),
+                        SizedBox(
+                          width: 205,
+                          height: 50,
+                          child: Tooltip(
+                            message:
+                                '自動使用/bank存入綠寶石',
+                            child: SwitchListTile(
+                                value: autoDeposit,
+                                onChanged: (value) {
+                                  setState(() {
+                                    autoDeposit = value;
+                                  });
+                                  appConfig.autoDeposit = autoDeposit;
+                                  widget.bot.updateConfig();
+                                },
+                                title: const Text('自動存入')),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -252,7 +273,11 @@ class _BotStatusPageState extends State<BotStatusPage> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onEditingComplete: () {
-                      widget.bot.runCommand(commandController.text);
+                      if (commandController.text == ".leave" || commandController.text == ".quit"){
+                        widget.bot.disconnect();
+                        Navigator.pop(context);
+                      }
+                      else {widget.bot.runCommand(commandController.text);}
                       commandController.text = '';
                     },
                   ),
@@ -260,7 +285,11 @@ class _BotStatusPageState extends State<BotStatusPage> {
                 const SizedBox(width: 8),
                 TextButton(
                     onPressed: () {
-                      widget.bot.runCommand(commandController.text);
+                      if (commandController.text == ".leave" || commandController.text == ".quit"){
+                        widget.bot.disconnect();
+                        Navigator.pop(context);
+                      }
+                      else {widget.bot.runCommand(commandController.text);}
                       commandController.text = '';
                     },
                     child: const Text('執行')),
@@ -293,7 +322,6 @@ class _StatusState extends State<_Status> {
       builder: (context, snapshot) {
         if (snapshot.data != null) {
           final data = snapshot.data!;
-
           return Column(
             children: [
               IntrinsicHeight(
