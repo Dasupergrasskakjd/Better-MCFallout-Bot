@@ -5,10 +5,10 @@ const ConfigStorage appConfig = ConfigStorage();
 class ConfigStorage {
   const ConfigStorage();
 
-  String? get analyticsClientId =>
+  /*String? get analyticsClientId =>
       ConfigHelper.get<String>('analytics_client_id');
   set analyticsClientId(String? value) =>
-      ConfigHelper.set<String>('analytics_client_id', value);
+      ConfigHelper.set<String>('analytics_client_id', value);*/
 
   ServerRegion get region =>
       ServerRegion.values.byName(ConfigHelper.get<String>('region',

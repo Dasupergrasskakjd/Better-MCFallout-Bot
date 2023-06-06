@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logging/logging.dart';
 
-final analytics = Analytics();
+/*final analytics = Analytics();
 
 class Analytics {
   final trackingId = 'G-660VJMJ3X5';
@@ -112,3 +112,4 @@ class Analytics {
     return locale;
   }
 }
+*/
