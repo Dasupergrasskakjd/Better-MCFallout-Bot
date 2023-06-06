@@ -55,7 +55,7 @@ export function createBot() {
   listenBotEvent(bot);
 
   bot.once("end", (reason) => {
-    EventEmitter.emit(Event.disconnected, { reason });
+    if (reason != "socketClosed") EventEmitter.emit(Event.disconnected, { reason });
   });
 
   // Error handling
@@ -102,6 +102,19 @@ function listenBotEvent(bot: mineflayer.Bot) {
   });
 
   bot.on("kicked", (reason) => {
-    EventEmitter.error(`The bot was kicked by server: ${reason}`);
+    try{
+      const r = JSON.parse(reason);
+      let reason1:string;
+      if (r['text']!=undefined){
+        reason1=r['text'];
+      }
+      else{
+        reason1 = r['translate'];
+      }
+      EventEmitter.emit(Event.disconnected,{reason:reason1});
+    }
+    catch(e){
+      EventEmitter.emit(Event.disconnected,{reason});
+    }
   });
 }

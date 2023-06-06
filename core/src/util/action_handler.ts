@@ -58,6 +58,12 @@ export class ActionHandler {
           case "itemid":
             let item:string = command.split(" ")[2];
             EventEmitter.gameMessage("Item id of "+item+" is "+((mcdata.itemsByName[item].id as unknown) as string),new Date().getTime());
+          case "listinv":
+            var itemsstring:String[] = [];
+            for (const item of bot.inventory.items()) {
+              itemsstring.push(`${item.count}x ${item.displayName}`);
+            }
+            EventEmitter.gameMessage(itemsstring!.toString(),new Date().getTime());
         }
     }
       else if (command.startsWith(".count")){
@@ -90,6 +96,9 @@ export class ActionHandler {
       }
       else if (command.startsWith(".stack")){
         stack(bot,"totem_of_undying")
+      }
+      else if (command.startsWith(".pos")){
+        EventEmitter.gameMessage(`${bot.entity.position.toString()} ${bot.game.dimension}`,new Date().getTime());
       }
       else if (command.startsWith(".")){
         EventEmitter.gameMessage(`Unknown command: ${command.split(" ")[0]}, use .say if you want to say it in chat`,new Date().getTime());
