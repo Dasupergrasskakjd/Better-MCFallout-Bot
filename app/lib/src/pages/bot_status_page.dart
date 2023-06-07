@@ -35,7 +35,7 @@ class _BotStatusPageState extends State<BotStatusPage> {
     super.initState();
 
     afterInit();
-    analytics.pageView('Bot Status Page');
+    //analytics.pageView('Bot Status Page');
   }
 
   void afterInit() {

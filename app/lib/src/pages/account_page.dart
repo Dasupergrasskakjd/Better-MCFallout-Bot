@@ -13,7 +13,7 @@ class _AccountPageState extends State<AccountPage> {
   void initState() {
     super.initState();
 
-    analytics.pageView('Account');
+    //analytics.pageView('Account');
   }
 
   @override

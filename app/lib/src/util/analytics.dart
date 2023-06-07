@@ -1,4 +1,4 @@
-import 'dart:io';
+/*import 'dart:io';
 import 'dart:math';
 
 import 'package:better_mcfallout_bot/src/better_mcfallout_bot.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logging/logging.dart';
 
-/*final analytics = Analytics();
+final analytics = Analytics();
 
 class Analytics {
   final trackingId = 'G-660VJMJ3X5';

@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    analytics.pageView('Home');
+    //analytics.pageView('Home');
   }
 
   @override

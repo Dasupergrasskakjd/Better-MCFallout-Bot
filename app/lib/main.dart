@@ -16,7 +16,7 @@ void main() async {
   Logger.root.info('App starting');
   await windowManager.ensureInitialized();
   await ConfigHelper.init();
-  await analytics.init();
+  //await analytics.init();
 
   await SentryFlutter.init((options) {
     options.dsn =
